@@ -1,6 +1,7 @@
 <template>
   <div class="content">
     <div class="preview">
+    <CollapsibleSection>
       <div class="preview-content">
         <div class="top-row">
           <img :src="selectedRobot.head.src"/>
@@ -14,7 +15,8 @@
           <img :src="selectedRobot.base.src"/>
         </div>
       </div>
-      <button class="add-to-cart" @click="addToCart">Add to cart</button>
+    </CollapsibleSection>
+    <button class="add-to-cart" @click="addToCart">Add to cart</button>
     </div>
       <div class="top-row">
       <!-- <div :class="[saleBorderClass, 'top', 'part']"> -->
@@ -74,10 +76,11 @@
 import availableParts from '../data/parts';
 import createdHookMixin from './created-hook-mixin';
 import PartSelector from './PartSelector.vue';
+import CollapsibleSection from '../shared/CollapsibleSection.vue';
 
 export default {
   name: 'RobotBuilder',
-  components: { PartSelector },
+  components: { PartSelector, CollapsibleSection },
   data() {
     return {
       availableParts,
