@@ -1,8 +1,11 @@
 <template>
-  <div>
+  <div class="content">
+      <button class="add-to-cart" @click="addToCart">Add to cart</button>
       <div class="top-row">
-      <div class="top part">
-        <div class="robot-name">{{ selectedRobot.head.title }}</div>
+      <div class="top part" :style="headBorderStyle">
+        <div class="robot-name">{{ selectedRobot.head.title }}
+        <span v-if="selectedRobot.head.onSale" class="sale">Sale!</span>
+        </div>
         <img v-bind:src="selectedRobot.head.src" title="head"/>
         <button v-on:click="selectPreviousHead()" class="prev-selector">&#9668;</button>
         <button v-on:click="selectNextHead()" class="next-selector">&#9658;</button>
@@ -32,6 +35,22 @@
         <button v-on:click="selectNextBase()" class="next-selector">&#9658;</button>
       </div>
     </div>
+    <div>
+      <h1>Cart</h1>
+      <table>
+        <thead>
+          <th>
+            <td>Robot</td><td class="cost">Cost</td>
+          </th>
+        </thead>
+        <tbody>
+          <tr v-for="(robot, index) in cart" v-bind:key="index">
+            <td>{{robot.head.title}}</td>
+            <td class="cost">{{robot.cost}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 <script>
@@ -52,6 +71,7 @@ export default {
   data() {
     return {
       availableParts,
+      cart: [],
       selectedHeadIndex: 0,
       selectedLeftArmIndex: 0,
       selectedRightArmIndex: 0,
@@ -60,6 +80,9 @@ export default {
     };
   },
   computed: {
+    headBorderStyle() {
+      return { border: this.selectedRobot.head.onSale ? 'solid 3px red' : 'solid 3px #aaa' };
+    },
     selectedRobot() {
       return {
         head: availableParts.heads[this.selectedHeadIndex],
@@ -71,6 +94,15 @@ export default {
     },
   },
   methods: {
+    addToCart() {
+      const robot = this.selectedRobot;
+      const cost = robot.head.cost + robot.leftArm.cost
+       + robot.torso.cost
+       + robot.rightArm.cost
+       + robot.base.cost;
+      // eslint-disable-next-line prefer-object-spread
+      this.cart.push(Object.assign({}, robot, { cost }));
+    },
     selectNextHead() {
       // console.log('next head clicked');
       this.selectedHeadIndex = getNextValidIndex(this.selectedHeadIndex,
@@ -115,7 +147,8 @@ export default {
   },
 };
 </script>
-<style>
+
+<style scoped>
 .part {
   position: relative;
   width:165px;
@@ -203,5 +236,23 @@ export default {
 }
 .right .next-selector {
   right: -3px;
+}
+.content {
+  position: relative;
+}
+.add-to-cart {
+ position: absolute;
+ right: 30px;
+ width: 220px;
+ padding: 5px;
+ font-size: 16px;
+}
+td, th {
+  text-align: left;
+  padding: 5px;
+  padding-right: 20px;
+}
+.cost {
+  text-align: right;
 }
 </style>
