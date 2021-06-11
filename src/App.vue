@@ -63,4 +63,10 @@ ul {
   vertical-align: middle;
   height: 30px;
 }
+.robot-name {
+ position: absolute;
+ top: -25px;
+ text-align: center;
+ width: 100%;
+}
 </style>
