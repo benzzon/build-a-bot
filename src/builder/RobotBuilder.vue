@@ -2,7 +2,7 @@
   <div class="content">
       <button class="add-to-cart" @click="addToCart">Add to cart</button>
       <div class="top-row">
-      <div class="top part" :style="headBorderStyle">
+      <div :class="[saleBorderClass, 'top', 'part']">
         <div class="robot-name">{{ selectedRobot.head.title }}
         <span v-if="selectedRobot.head.onSale" class="sale">Sale!</span>
         </div>
@@ -55,6 +55,7 @@
 </template>
 <script>
 import availableParts from '../data/parts';
+import createdHookMixin from './created-hook-mixin';
 
 function getPreviousValidIndex(index, length) {
   const deprecatedIndex = index - 1;
@@ -79,9 +80,13 @@ export default {
       selectedBaseIndex: 0,
     };
   },
+  mixins: [createdHookMixin],
   computed: {
-    headBorderStyle() {
-      return { border: this.selectedRobot.head.onSale ? 'solid 3px red' : 'solid 3px #aaa' };
+    //    headBorderStyle() {
+    //      return { border: this.selectedRobot.head.onSale ? 'solid 3px red' : 'solid 3px #aaa' };
+    //    },
+    saleBorderClass() {
+      return this.selectedRobot.head.onSale ? 'sale-border' : '';
     },
     selectedRobot() {
       return {
@@ -148,7 +153,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .part {
   position: relative;
   width:165px;
@@ -158,6 +163,13 @@ export default {
 .part img {
   width:165px;
 }
+/* Sass-syntax below:
+  .part {
+   img {
+  width:165px;
+   }
+}
+ */
 .top-row {
   display:flex;
   justify-content: space-around;
@@ -254,5 +266,17 @@ td, th {
 }
 .cost {
   text-align: right;
+}
+.sale-border {
+  border: 3px solid red;
+}
+.robot-name {
+ position: absolute;
+ top: -25px;
+ text-align: center;
+ width: 100%;
+}
+.sale {
+ color: red;
 }
 </style>
