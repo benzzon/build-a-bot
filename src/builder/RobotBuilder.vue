@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="top-row">
+      <div class="top-row">
       <div class="top part">
         <img src="./images/head-big-eye.png" title="head"/>
         <button class="prev-selector">&#9668;</button>
@@ -33,21 +33,18 @@
     </div>
   </div>
 </template>
-
 <script>
-    export default {
-        name: 'RobotBuilder',
-
-    }
+export default {
+  name: 'RobotBuilder',
+};
 </script>
-
 <style>
 .part {
   position: relative;
   width:165px;
   height:165px;
   border: 3px solid #aaa;
-} 
+}
 .part img {
   width:165px;
 }
@@ -110,20 +107,20 @@
 .left .next-selector {
   top: auto;
   bottom: -28px;
-  left: -3px;    
+  left: -3px;
   width: 144px;
   height: 25px;
 }
 .right .prev-selector {
   top: -28px;
-  left: 24px;  
+  left: 24px;
   width: 144px;
   height: 25px;
 }
 .right .next-selector {
   top: auto;
   bottom: -28px;
-  left: 24px;    
+  left: 24px;
   width: 144px;
   height: 25px;
 }
